@@ -18,6 +18,9 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?= base_url()?>public/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+
+
 
 </head>
 
@@ -64,37 +67,39 @@
 
        </form>
        <div class="col-md-12">
-           <table class="table table-condensed">
-               <th>Codigo</th>
-               <th>Fecha</th>
-               <th>Lugar</th>
-               <th>Espacio</th>
-               <th>Hora</th>
-               <th>Categoria</th>
-               <th>Evento</th>
-               <th>Expositor</th>
-               <th>Responsable</th>
-               <th>Telefono</th>
-               <th>Correo</th>
-               <th>Ir</th>
+           <table id="eventos" class="table table-condensed">
                <?php
-                    foreach($eventos as $evetnp){
-                        echo "<tr>
-                               <td>318</td>
-                               <td>10-Dic-2015</td>
-                               <td>CC El Olivar</td>
-                               <td>Auditoria</td>
-                               <td>08:00 pm</td>
-                               <td>Teatro</td>
-                               <td>\"Asi de Simple\"</td>
-                               <td>Wuiton Carreno</td>
-                               <td>Victor Mendoza</td>
-                               <td>99999999</td>
-                               <td>webmaster@chapatubus.com</td>
-                               <td><a href=''>Quiero Ir</a></td>
-                            </tr>";
+               $cont = 0;
+                    foreach($eventos->result as $evento){
+                        if($cont == 0){
+                            echo "<thead>";
+                        }elseif ($cont == 1){
+                            echo "<tbody>";
+                        }
+                        echo "<tr>";
+                        foreach($evento as $data){
+                            if($cont == 0){
+                                echo "<th>";
+                            }else{
+                                echo "<td>";
+                            }
+                            echo $data;
+                            if($cont == 0){
+                                echo "</th>";
+                            }else{
+                                echo "</td>";
+                            }
+                        }
+                        echo "</tr>";
+                        if($cont == 0){
+                            echo "</thead>";
+                        }
+                        $cont++;
                     }
+
+               echo "<tbody>";
                ?>
+
            </table>
        </div> 
  
@@ -116,6 +121,12 @@
     <!-- Custom Theme JavaScript -->
     <script src="<?= base_url()?>public/js/creative.js"></script>
     <script type="text/javascript" src="<?= base_url()?>public/js/main.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $('#eventos').DataTable();
+    </script>
 </body>
 
 </html>
